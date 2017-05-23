@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Primera aplicación en phoneGap</title>
+	 <link href="css/bootstrap.min.css" rel="stylesheet">
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+   <script src="js/bootstrap.min.js"></script>
+
+<script>
+
+window.onload = function(){
+
+$("#receta").click(enviar);
+}
+
+function enviar() { 
+  var tiempo=$("#tiempo").val(); 
+  var nombre=$("#nombre").val(); 
+  var tipo=$("#tipo").val(); 
+  
+  $.ajax({ 
+  async:true, 
+  type: "POST", 
+  dataType: "html", contentType: "application/x-www-form-urlencoded", 
+  url:"https://dianagomez605.000webhostapp.com/phone/receta.php", 
+  data:"tiempo="+tiempo+"&nombre="+nombre+"&tipo="+tipo, beforeSend:inicioEnvio, success:llegadaDatos, 
+  timeout:7000, 
+  error:problemas }); 
+  return false; 
+} 
+
+ function inicioEnvio()
+        {
+            $("#respuesta").text("Se esta registrando la receta ");
+        }
+
+        function llegadaDatos(datos)
+        {
+            $("#respuesta").text(datos);
+                       
+        }
+
+        function problemas()
+        {
+            $("#respuesta").text('Problemas en el servidor.');
+        }
+
+</script>
+
+
+  </body>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Proyecto PhoneGap</a>
+    </div>
+    <ul class="nav navbar-nav">
+     <li class="active"><a href="index.html">Home</a></li>
+      <li><a href="mostrarReserva.html">Consultar reservas</a></li>
+      <li><a href="formReserva.html">Realizar reservas</a></li>
+      
+    </ul>
+  </div>
+</nav>
+<h1>Reservar</h1>
+
+
+
+ 
+  <div class="form-group">
+    <label for="tiempo">tiempo:</label>
+    <input type="text" class="form-control" id="tiempo" name="tiempo">
+  </div>
+  <div class="form-group">
+    <label for="nombre">nombre:</label>
+    <input type="text" class="form-control" id="nombre" name="nombre">
+  </div>
+  <div class="form-group">
+    <label for="tipo">tipo:</label>
+    <input type="text" class="form-control" id="tipo" name="tipo">
+  </div>
+ 
+  <button type="button" id="reserva" class="btn btn-default">Reservar</button>
+
+
+<div id="respuesta"></div>
+
+
+
+
+
+
+
+</body>
+</html>
